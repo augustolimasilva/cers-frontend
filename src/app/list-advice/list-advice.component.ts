@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild  } from '@angular/core';
 import { AdviceService } from '../advice.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Advice } from '../advice';
 import { Observable, Subject} from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-list-advice',
@@ -16,6 +17,9 @@ export class ListAdviceComponent implements OnInit {
   advicesArray: any[] = [];
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
+
+  @ViewChild(DataTableDirective, {static: false})
+  dtElement: DataTableDirective;
 
   advices: Observable<Advice[]>;
   advice: Advice = new Advice();
@@ -94,6 +98,7 @@ export class ListAdviceComponent implements OnInit {
     this.advice.description = this.adviceDescription.value;
     this.update(id);
     this.modal = false;
+    this.rerender();
   }
 
   update(id: number) {
@@ -132,5 +137,14 @@ export class ListAdviceComponent implements OnInit {
 
   closeAlert() {
     this.ismensagem = false;
+  }
+
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+      // Call the dtTrigger to rerender again
+      this.dtTrigger.next();
+    });
   }
 }

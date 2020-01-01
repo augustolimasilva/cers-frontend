@@ -41,10 +41,10 @@
                     </div>          
                 </div>   
                 <div class="row">
-                    <div class="col-sm-4"></div> 
-                    <div class="col-sm-4">
-                        <button type="submit" class="btn btn-success" [disabled]="!saveAdviceForm.valid"> Save</button>
-                    </div>   
+                    <button type="submit" class="btn btn-success btn-block" [disabled]="!saveAdviceForm.valid"> Save</button>
+                </div><br>
+                <div class="row">
+                    <button type="submit" class="btn btn-block btn-primary" [routerLink]="['/list-advice']">Back</button>
                 </div>
             </form>
         </div>
