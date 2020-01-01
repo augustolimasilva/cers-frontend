@@ -13,11 +13,10 @@ export class AddAdviceComponent implements OnInit {
   constructor(private adviceService: AdviceService) { }
 
   advice: Advice = new Advice();
-  submitted: boolean = false;
+  retorno: any;
+  ismensagem: boolean = false;
 
-  ngOnInit() {
-    this.submitted = false;
-  }
+  ngOnInit() { }
 
   saveAdviceForm= new FormGroup ({
     title: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]),
@@ -25,16 +24,24 @@ export class AddAdviceComponent implements OnInit {
   });
 
   saveAdvice(saveAdvice) {
+    console.log('teste');
     this.advice = new Advice();
     this.advice.title = this.adviceTitle.value;
     this.advice.description = this.adviceDescription.value;
-    this.submitted = true;
     this.save();
+    this.saveAdviceForm.reset();
   }
 
   save() {
+    console.log('teste');
     this.adviceService.insertAdvice(this.advice)
-        .subscribe(data => console.log(data), error => console.log(error));
+        .subscribe(data => {
+                      this.retorno = 'Advice Added SuccessFully!',
+                      this.ismensagem =  true;
+                    }, error => {
+                      this.retorno = error.error.message,
+                      this.ismensagem =  true;
+                    });
   }
 
   get adviceTitle() {
@@ -45,8 +52,7 @@ export class AddAdviceComponent implements OnInit {
     return this.saveAdviceForm.get('description');
   }
 
-  addAdviceForm() {
-    this.submitted = false;
-    this.saveAdviceForm.reset();
+   closeAlert() {
+    this.ismensagem = false;
   }
 }

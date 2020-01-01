@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AddAdviceComponent } from './add-advice/add-advice.component';
+import { DataTablesModule } from 'angular-datatables';
 import { ListAdviceComponent } from './list-advice/list-advice.component';
 
 @NgModule({
@@ -18,7 +19,8 @@ import { ListAdviceComponent } from './list-advice/list-advice.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    DataTablesModule
   ],
   providers: [],
   bootstrap: [AppComponent]
